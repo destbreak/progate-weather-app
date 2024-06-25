@@ -16,24 +16,30 @@ export default function App() {
       case "success":
         return <WeatherInfo weatherData={weatherData} />;
       case "error":
-        return <Text>Something went wrong. Please try again with a correct city name.</Text>;
+        return <Text>Terjadi kesalahan. Mohon coba kembali dengan nama kota yang benar</Text>;
       default:
         return;
     }
   };
 
   const searchWeather = (location) => {
+    const language = "id";
     const url = "https://api.openweathermap.org/data/2.5/weather";
 
     setStatus("loading");
     axios
-      .get(`${url}?q=${location}&appid=${API_KEY}`)
+      .get(`${url}?q=${location}&appid=${API_KEY}&lang=${language}`)
       .then((response) => {
         const data = response.data;
-        data.visibility /= 1000;
-        data.visibility = data.visibility.toFixed(2);
+        data.weather[0].description = data.weather[0].description.toUpperCase();
         data.main.temp -= 273.15;
         data.main.temp = data.main.temp.toFixed(2);
+        data.main.temp_max -= 273.15;
+        data.main.temp_max = data.main.temp_max.toFixed(2);
+        data.main.temp_min -= 273.15;
+        data.main.temp_min = data.main.temp_min.toFixed(2);
+        data.visibility /= 1000;
+        data.visibility = data.visibility.toFixed(2);
         setWeatherData(data);
         setStatus("success");
       })
