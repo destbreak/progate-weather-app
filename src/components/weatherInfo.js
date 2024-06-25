@@ -1,23 +1,23 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
-const WeatherInfo = () => {
+const WeatherInfo = ({ weatherData }) => {
   return (
     <View style={styles.marginTop20}>
-      <Text style={styles.text}>The Weather of Semarang</Text>
-      <Text style={[styles.temperature, styles.marginTop20]}>15 C</Text>
+      <Text style={styles.text}>The Weather of {weatherData.name}</Text>
+      <Text style={[styles.temperature, styles.marginTop20]}>{weatherData.main.temp}</Text>
       <View style={[styles.rowContainer, styles.marginTop20]}>
         <Image source={{ uri: "https://openweathermap.org/img/w/04d.png" }} style={styles.weatherIcon} />
-        <Text style={[styles.text, styles.bold]}>Clouds</Text>
+        <Text style={[styles.text, styles.bold]}>{weatherData.weather[0].main}</Text>
       </View>
-      <Text style={styles.text}>Overcast Clouds</Text>
+      <Text style={styles.text}>{weatherData.weather[0].description}</Text>
       <View style={[styles.rowContainer, styles.marginTop20]}>
         <Text style={[styles.text, styles.bold]}>Visibility : </Text>
-        <Text style={[styles.text, styles.marginLeft15]}>10 km</Text>
+        <Text style={[styles.text, styles.marginLeft15]}>{weatherData.visibility} km</Text>
       </View>
       <View style={[styles.rowContainer, styles.marginTop20]}>
         <Text style={[styles.text, styles.bold]}>Wind Speed : </Text>
-        <Text style={[styles.text, styles.marginLeft15]}>10 m/s</Text>
+        <Text style={[styles.text, styles.marginLeft15]}>{weatherData.wind.speed} m/s</Text>
       </View>
     </View>
   );
